@@ -1,5 +1,10 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
+{% if cookiecutter.open_source_license == 'LGPL 3.0' %}
+{% include 'HEADER.txt' %}
+{% else %}
+# Copyright (c) {% now 'local', '%Y' %} Be The Match operated by National Marrow Donor Program. All Rights Reserved.
+{% endif %}
 
 from setuptools import setup
 
@@ -21,6 +26,7 @@ test_requirements = [
 ]
 
 {%- set license_classifiers = {
+    'LGPL 3.0': 'License :: OSI Approved :: GNU Lesser General Public License v3 (LGPLv3)',
     'MIT license': 'License :: OSI Approved :: MIT License',
     'BSD license': 'License :: OSI Approved :: BSD License',
     'ISC license': 'License :: OSI Approved :: ISC License (ISCL)',

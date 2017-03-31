@@ -1,5 +1,6 @@
 Welcome to {{ cookiecutter.project_name }}'s documentation!
 ======================================
+Copyright (c) {% now 'local', '%Y' %} Be The Match operated by National Marrow Donor Program. All Rights Reserved.
 
 Contents:
 
