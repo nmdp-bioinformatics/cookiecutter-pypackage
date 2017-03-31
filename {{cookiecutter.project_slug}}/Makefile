@@ -92,3 +92,14 @@ dist: clean ## builds source and wheel package
 
 install: clean ## install the package to the active Python's site-packages
 	python setup.py install
+
+venv:
+	virtualenv -p python3 venv
+	@echo "====================================================================="
+	@echo "To activate the new virtualenv, execute the following from your shell"
+	@echo "source $(PWD)/venv/bin/activate"
+
+activate:
+	@echo "====================================================================="
+	@echo "To activate the new virtualenv, execute the following from your shell"
+	@echo "source $(PWD)/venv/bin/activate"
