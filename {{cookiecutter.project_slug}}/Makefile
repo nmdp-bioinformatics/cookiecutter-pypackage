@@ -93,13 +93,32 @@ dist: clean ## builds source and wheel package
 install: clean ## install the package to the active Python's site-packages
 	python setup.py install
 
-venv:
+venv: ## creates a Python3 virtualenv environment in venv
 	virtualenv -p python3 venv
 	@echo "====================================================================="
 	@echo "To activate the new virtualenv, execute the following from your shell"
 	@echo "source $(PWD)/venv/bin/activate"
 
-activate:
+activate: ## activate a virtual environment. Run `make venv` before activating.
 	@echo "====================================================================="
 	@echo "To activate the new virtualenv, execute the following from your shell"
 	@echo "source $(PWD)/venv/bin/activate"
+
+git-init: ## initializes a git repository. Commits and pushes to github.
+	@echo "====================================================================="
+	@echo "Make sure you've created a github repo '{{cookiecutter.github_username}}/{{cookiecutter.project_slug}}'"
+	@read -p "Continue? [Y/N] " choice; \
+	case "$$choice" in \
+		y | Y ) \
+			echo "====================================================================="; \
+			git init . ; \
+			git add . ; \
+			git commit -m "Initial Import" ; \
+			git remote add origin https://github.com/{{cookiecutter.github_username}}/{{cookiecutter.project_slug}} ; \
+			git push -u origin master; \
+			echo "====================================================================="; \
+			echo "Git Initialized!" \
+			;; \
+	  * ) echo "Git NOT initialized!" ;; \
+	esac; 
+
