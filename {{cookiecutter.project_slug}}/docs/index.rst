@@ -9,6 +9,9 @@ Contents:
 
    readme
    installation
+
+   {{cookiecutter.project_slug}}
+
    usage
    contributing
    {% if cookiecutter.create_author_file == 'y' -%}authors{% endif -%}
