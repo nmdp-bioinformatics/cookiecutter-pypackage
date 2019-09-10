@@ -6,7 +6,9 @@
 # Copyright (c) {% now 'local', '%Y' %} Be The Match operated by National Marrow Donor Program. All Rights Reserved.
 {% endif %}
 
-from setuptools import setup
+"""The setup script."""
+
+from setuptools import setup, find_packages
 
 with open('README.rst') as readme_file:
     readme = readme_file.read()
@@ -14,16 +16,11 @@ with open('README.rst') as readme_file:
 with open('HISTORY.rst') as history_file:
     history = history_file.read()
 
-requirements = [
-    {%- if cookiecutter.command_line_interface|lower == 'click' %}
-    'Click>=6.0',
-    {%- endif %}
-    # TODO: put package requirements here
-]
+requirements = [{%- if cookiecutter.command_line_interface|lower == 'click' %}'Click>=6.0',{%- endif %} ]
 
-test_requirements = [
-    # TODO: put package test requirements here
-]
+setup_requirements = [{%- if cookiecutter.use_pytest == 'y' %}'pytest-runner',{%- endif %} ]
+
+test_requirements = [{%- if cookiecutter.use_pytest == 'y' %}'pytest',{%- endif %} ]
 
 {%- set license_classifiers = {
     'LGPL 3.0': 'License :: OSI Approved :: GNU Lesser General Public License v3 (LGPLv3)',
@@ -35,32 +32,9 @@ test_requirements = [
 } %}
 
 setup(
-    name='{{ cookiecutter.project_slug }}',
-    version='{{ cookiecutter.version }}',
-    description="{{ cookiecutter.project_short_description }}",
-    long_description=readme + '\n\n' + history,
     author="{{ cookiecutter.full_name.replace('\"', '\\\"') }}",
     author_email='{{ cookiecutter.email }}',
-    url='https://github.com/{{ cookiecutter.github_username }}/{{ cookiecutter.project_slug }}',
-    packages=[
-        '{{ cookiecutter.project_slug }}',
-    ],
-    package_dir={'{{ cookiecutter.project_slug }}':
-                 '{{ cookiecutter.project_slug }}'},
-    {%- if 'no' not in cookiecutter.command_line_interface|lower %}
-    entry_points={
-        'console_scripts': [
-            '{{ cookiecutter.project_slug }}={{ cookiecutter.project_slug }}.cli:main'
-        ]
-    },
-    {%- endif %}
-    include_package_data=True,
-    install_requires=requirements,
-{%- if cookiecutter.open_source_license in license_classifiers %}
-    license="{{ cookiecutter.open_source_license }}",
-{%- endif %}
-    zip_safe=False,
-    keywords='{{ cookiecutter.project_slug }}',
+    python_requires='>=2.7, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*, !=3.4.*',
     classifiers=[
         'Development Status :: 2 - Pre-Alpha',
         'Intended Audience :: Developers',
@@ -69,13 +43,33 @@ setup(
 {%- endif %}
         'Natural Language :: English',
         "Programming Language :: Python :: 2",
-        'Programming Language :: Python :: 2.6',
         'Programming Language :: Python :: 2.7',
         'Programming Language :: Python :: 3',
-        'Programming Language :: Python :: 3.3',
-        'Programming Language :: Python :: 3.4',
         'Programming Language :: Python :: 3.5',
+        'Programming Language :: Python :: 3.6',
+        'Programming Language :: Python :: 3.7',
     ],
+    description="{{ cookiecutter.project_short_description }}",
+    {%- if 'no' not in cookiecutter.command_line_interface|lower %}
+    entry_points={
+        'console_scripts': [
+            '{{ cookiecutter.project_slug }}={{ cookiecutter.project_slug }}.cli:main',
+        ],
+    },
+    {%- endif %}
+    install_requires=requirements,
+{%- if cookiecutter.open_source_license in license_classifiers %}
+    license="{{ cookiecutter.open_source_license }}",
+{%- endif %}
+    long_description=readme + '\n\n' + history,
+    include_package_data=True,
+    keywords='{{ cookiecutter.project_slug }}',
+    name='{{ cookiecutter.project_slug }}',
+    packages=find_packages(include=['{{ cookiecutter.project_slug }}']),
+    setup_requires=setup_requirements,
     test_suite='tests',
-    tests_require=test_requirements
+    tests_require=test_requirements,
+    url='https://github.com/{{ cookiecutter.github_username }}/{{ cookiecutter.project_slug }}',
+    version='{{ cookiecutter.version }}',
+    zip_safe=False,
 )

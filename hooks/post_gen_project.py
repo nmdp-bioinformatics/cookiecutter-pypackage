@@ -9,12 +9,13 @@ def remove_file(filepath):
 
 
 if __name__ == '__main__':
-    if '{{ cookiecutter.use_pypi_deployment_with_travis }}' != 'y':
-        remove_file('travis_pypi_setup.py')
 
     if '{{ cookiecutter.create_author_file }}' != 'y':
         remove_file('AUTHORS.rst')
         remove_file('docs/authors.rst')
+
+    if '{{ cookiecutter.use_pytest }}' == 'y':
+        remove_file('tests/__init__.py')
 
     if 'no' in '{{ cookiecutter.command_line_interface|lower }}':
         cli_file = os.path.join('{{ cookiecutter.project_slug }}', 'cli.py')

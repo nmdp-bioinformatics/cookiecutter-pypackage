@@ -96,10 +96,6 @@ Your virtualenv should still be activated. If it isn't, activate it now. Install
 
     pip install -r requirements_dev.txt
 
-If you have issues building the wheel for cryptography, make sure that the required dependencies are installed. Follow the `Cryptography Instruction`_ for your OS
-
-.. _`Cryptography Instruction`: https://cryptography.io/en/latest/installation/
-
 
 Step 5: Set Up Travis CI
 ------------------------
@@ -110,11 +106,11 @@ Login using your Github credentials. It may take a few minutes for Travis CI to 
 
 Add the public repo to your Travis CI account by clicking the ``X`` to switch it "on" in the box next to the ``mypackage`` repo. Do not try to follow the other instructions, that will be taken care of next.
 
-In your terminal, your virtualenv should still be activated. If it isn't, activate it now. Run the script to do your Travis CI setup:
+In your terminal, your virtualenv should still be activated. If it isn't, activate it now. Run the Travis CLI tool to do your Travis CI setup:
 
 .. code-block:: bash
 
-    python travis_pypi_setup.py
+    travis encrypt --add deploy.password
 
 This will:
 
