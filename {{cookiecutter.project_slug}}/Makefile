@@ -35,8 +35,8 @@ clean-build: ## remove build artifacts
 	rm -fr build/
 	rm -fr dist/
 	rm -fr .eggs/
-	find . -name '*.egg-info' -exec rm -fr {} +
-	find . -name '*.egg' -exec rm -f {} +
+	find . -name '*.egg-info' -exec rm -rf {} +
+	find . -name '*.egg' -exec rm -rf {} +
 
 clean-pyc: ## remove Python file artifacts
 	find . -name '*.pyc' -exec rm -f {} +
@@ -93,10 +93,12 @@ dist: clean ## builds source and wheel package
 	ls -l dist
 
 install: clean ## install the package to the active Python's site-packages
+	pip install --upgrade pip
 	python setup.py install
+	pip install -r requirements_dev.txt
 
 venv: ## creates a Python3 virtualenv environment in venv
-	virtualenv -p python3 venv
+	python3 -m venv venv
 	@echo "====================================================================="
 	@echo "To activate the new virtualenv, execute the following from your shell"
 	@echo "source $(PWD)/venv/bin/activate"
